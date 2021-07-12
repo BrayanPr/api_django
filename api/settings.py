@@ -86,6 +86,22 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'api.wsgi.application'
 
+if LOCAL:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else:
+    import dj_database_url
+    from decouple import config
+
+    DATABASES={
+        'default': dj_database_url.config(
+            default=config('DATABASE_URL')
+        )
+    }
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -166,20 +182,3 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
 }
-
-if LOCAL:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-else:
-    import dj_database_url
-    from decouple import config
-
-    DATABASES={
-        'default': dj_database_url.config(
-            default=config('DATABASE_URL')
-        )
-    }
