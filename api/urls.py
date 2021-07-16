@@ -8,6 +8,7 @@ from django.conf.urls.static import static
 from users.views.login import UserLoginAPIView as login 
 from users.views import users as UserViews
 from posts.views import PostViewSet
+from users.views.users import ProfileCompletionViewSet
 from posts.models import Post
 #Rest_framework 
 from rest_framework.routers import DefaultRouter
@@ -15,7 +16,7 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register(r'posts',PostViewSet, basename='posts')
-
+router.register(r'profile', ProfileCompletionViewSet, basename='profile')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', UserViews.UserListView.as_view(), name="users"),

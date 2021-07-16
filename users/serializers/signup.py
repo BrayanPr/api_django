@@ -22,9 +22,6 @@ class UserSignupSerializer(serializers.Serializer):
         allow_blank=False,
     validators=[UniqueValidator(queryset=User.objects.all())])
 
-    profile_picture_url = serializers.ImageField()
-    header_img_url = serializers.ImageField()
-
     email = serializers.EmailField(
         max_length=150,
         allow_blank=False,
@@ -39,27 +36,8 @@ class UserSignupSerializer(serializers.Serializer):
         max_length=128, 
         allow_blank=False)
 
-    age = serializers.IntegerField()
-
-    first_name = serializers.CharField(
-        max_length=150, 
-        allow_blank=False)
-    last_name = serializers.CharField(
-        max_length=150, 
-        allow_blank=False)
-
-    city = serializers.CharField(
-        max_length=100, 
-        allow_blank=False)
-    country = serializers.CharField(
-        max_length=100, 
-        allow_blank=False)
-
-    likes = serializers.IntegerField()
-    followers = serializers.IntegerField()
-    posts = serializers.IntegerField()
-
     def validate(self,data):
+
         passwd = data['password']
         passwd_conf = data['password_confirmation']
 
@@ -70,23 +48,13 @@ class UserSignupSerializer(serializers.Serializer):
         return data
     
     def create(self,data):
+        data.pop('password_confirmation')
         user = User.objects.create_user(
             username=data['username'], 
             password=data['password'],
-            first_name=data['first_name'],
-            last_name=data['last_name'],
             email=data['email']
         )
-
         profile = Profile(user=user)
-        profile.profile_picture_url = data['profile_picture_url']
-        profile.header_img_url = data['header_img_url']
-        profile.age = data['age']
-        profile.city=data['city']
-        profile.country=data['country']
-        profile.likes=data['likes']
-        profile.followers=data['followers']
-        profile.posts=data['posts']
         profile.is_verified=False
         
         profile.save()

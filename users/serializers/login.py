@@ -14,7 +14,7 @@ class UserLoginSerializer(serializers.Serializer):
         if not user:
             raise serializers.ValidationError({status.HTTP_401_UNAUTHORIZED:'Invalid credentials'})
         if not user.profile.is_verified:
-            raise serializers.ValidationError({status.HTTP_405_UNAUTHORIZED:'User not verified'})
+            raise serializers.ValidationError({status.HTTP_401_UNAUTHORIZED:'User not verified'})
         
         self.context['user'] = user
         return data
