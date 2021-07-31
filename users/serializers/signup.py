@@ -59,7 +59,7 @@ class UserSignupSerializer(serializers.Serializer):
         
         profile.save()
 
-        self.send_confirmation_email( user)
+        self.send_confirmation_email(user)
 
         return user
     def send_confirmation_email(self, user):

@@ -7,12 +7,10 @@ from django.conf.urls.static import static
 #Views
 from users.views.login import UserLoginAPIView as login 
 from users.views import users as UserViews
-from posts.views import PostViewSet
 from users.views.users import ProfileCompletionViewSet
-from posts.models import Post
+from posts.views import PostViewSet
 #Rest_framework 
 from rest_framework.routers import DefaultRouter
-
 
 router = DefaultRouter()
 router.register(r'posts',PostViewSet, basename='posts')
