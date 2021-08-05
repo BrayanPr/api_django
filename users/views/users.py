@@ -24,7 +24,7 @@ class UserListView(ListAPIView):
     pagination_class = PageNumberPagination
 
 
-class ProfileCompletionViewSet(mixins.UpdateModelMixin, viewsets.GenericViewSet):
+class ProfileCompletionViewSet(mixins.UpdateModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes=[IsAuthenticated, IsOwnProfile]
